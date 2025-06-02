@@ -277,4 +277,35 @@ class HouseholdAgent(BaseAgent):
             self.update_state({
                 'damage_level': base_damage,
                 'assets_at_risk': total_damage
-            }) 
+            })
+
+    def distance_to(self, other_agent: BaseAgent) -> float:
+        """
+        Calculate Euclidean distance to another agent.
+
+        Args:
+            other_agent: The agent to calculate distance to
+
+        Returns:
+            Euclidean distance between the agents
+        """
+        dx = other_agent.position[0] - self.position[0]
+        dy = other_agent.position[1] - self.position[1]
+        return np.sqrt(dx*dx + dy*dy)
+
+    def move_to(self, new_position: Tuple[float, float]) -> None:
+        """
+        Move the agent to a new position.
+
+        Args:
+            new_position: (x, y) coordinates of the new position
+        """
+        # Update grid position
+        old_pos = (int(round(self.position[0])), int(round(self.position[1])))
+        new_pos = (int(round(new_position[0])), int(round(new_position[1])))
+        
+        if old_pos != new_pos:
+            self.model.grid.move_agent(self, new_pos)
+        
+        # Update agent position
+        self.position = new_position 

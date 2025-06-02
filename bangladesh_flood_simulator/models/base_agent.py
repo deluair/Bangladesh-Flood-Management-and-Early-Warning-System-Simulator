@@ -88,6 +88,14 @@ class BaseAgent(Agent, ABC):
         Args:
             new_position: (x, y) coordinates of the new position
         """
+        # Update grid position
+        old_pos = (int(round(self.position[0])), int(round(self.position[1])))
+        new_pos = (int(round(new_position[0])), int(round(new_position[1])))
+        
+        if old_pos != new_pos:
+            self.model.grid.move_agent(self, new_pos)
+        
+        # Update agent position
         self.position = new_position
         self.update_state({'position': new_position})
 

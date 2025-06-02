@@ -68,7 +68,7 @@ class RiverAgent(BaseAgent):
 
     def _update_water_level(self) -> None:
         """Update the river's water level based on various factors."""
-        # Get rainfall data from model (simplified)
+        # Get rainfall data from model
         rainfall = self.model.get_rainfall_data(self.position)
         
         # Calculate water level change
@@ -199,5 +199,24 @@ class RiverAgent(BaseAgent):
             'warning_level': self.state['warning_level'],
             'affected_areas': len(self.state['affected_areas']),
             'flow_rate': self.state['flow_rate'],
-            'flood_probability': 0.0,
-        } 
+            'flood_probability': self._calculate_flood_probability()
+        }
+
+    def _calculate_flood_probability(self) -> float:
+        """
+        Calculate the probability of flooding based on current conditions.
+
+        Returns:
+            Float between 0 and 1 representing flood probability
+        """
+        water_level = self.state['water_level']
+        flood_thresholds = self.model.config['hydrology']['flood_thresholds']
+        
+        if water_level >= flood_thresholds['severe_level']:
+            return 1.0
+        elif water_level >= flood_thresholds['danger_level']:
+            return 0.8
+        elif water_level >= flood_thresholds['danger_level'] * 0.7:
+            return 0.4
+        else:
+            return 0.1 

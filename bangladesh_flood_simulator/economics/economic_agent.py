@@ -51,19 +51,22 @@ class EconomicAgent(BaseAgent):
                 'vulnerability': 0.8,
                 'recovery_time': 180,  # days
                 'insurance_rate': 0.3,
-                'employment_ratio': 0.4
+                'employment_ratio': 0.4,
+                'base_assets': 50000
             },
             'industry': {
                 'vulnerability': 0.6,
                 'recovery_time': 90,  # days
                 'insurance_rate': 0.7,
-                'employment_ratio': 0.3
+                'employment_ratio': 0.3,
+                'base_assets': 200000
             },
             'services': {
                 'vulnerability': 0.4,
                 'recovery_time': 30,  # days
                 'insurance_rate': 0.5,
-                'employment_ratio': 0.3
+                'employment_ratio': 0.3,
+                'base_assets': 100000
             }
         }
         
@@ -71,7 +74,8 @@ class EconomicAgent(BaseAgent):
             'vulnerability': 0.5,
             'recovery_time': 60,
             'insurance_rate': 0.5,
-            'employment_ratio': 0.33
+            'employment_ratio': 0.33,
+            'base_assets': 75000
         })
         
         self.sector_params = params
@@ -82,6 +86,12 @@ class EconomicAgent(BaseAgent):
             params['employment_ratio'] /
             1000  # Scale down for simulation
         )
+        
+        # Initialize assets
+        self.state['assets'] = params['base_assets']
+        
+        # Initialize insurance coverage
+        self.state['insurance_coverage'] = params['insurance_rate']
 
     def step(self) -> None:
         """Execute one step of the economic agent's behavior."""
