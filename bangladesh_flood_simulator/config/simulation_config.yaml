@@ -1,0 +1,113 @@
+# Simulation Configuration
+
+# General Settings
+simulation:
+  name: "Bangladesh Flood Management Simulation"
+  version: "0.1.0"
+  start_date: "2024-01-01"
+  end_date: "2024-12-31"
+  time_step: 3600  # seconds
+  random_seed: 42
+
+# Geographic Settings
+geography:
+  region: "Bangladesh"
+  bounding_box:
+    north: 26.634
+    south: 20.743
+    east: 92.673
+    west: 88.028
+  resolution: 0.01  # degrees
+
+# Hydrological Settings
+hydrology:
+  rivers:
+    - name: "Ganges"
+      source: "India"
+      length: 2510  # km
+    - name: "Brahmaputra"
+      source: "China"
+      length: 2900  # km
+    - name: "Meghna"
+      source: "India"
+      length: 930  # km
+  rainfall_stations: 400
+  water_level_stations: 250
+  flood_thresholds:
+    danger_level: 1.0  # meters
+    severe_level: 2.0  # meters
+
+# Economic Settings
+economics:
+  sectors:
+    - agriculture
+    - industry
+    - services
+  damage_functions:
+    housing:
+      kutcha: 0.8
+      semi_pucca: 0.5
+      pucca: 0.3
+    agriculture:
+      rice: 0.7
+      vegetables: 0.9
+      livestock: 0.6
+
+# Social Settings
+social:
+  population: 166000000
+  vulnerable_groups:
+    - children
+    - elderly
+    - disabled
+    - pregnant_women
+  evacuation_thresholds:
+    warning_level: 0.5
+    mandatory_level: 1.0
+
+# Infrastructure Settings
+infrastructure:
+  shelters:
+    total: 5000
+    capacity_per_shelter: 1000
+  embankments:
+    total_length: 16000  # km
+    average_height: 3.0  # meters
+  drainage:
+    pump_stations: 500
+    retention_ponds: 1000
+
+# Early Warning Settings
+early_warning:
+  forecast_lead_time: 72  # hours
+  warning_channels:
+    - sms
+    - radio
+    - television
+    - community_volunteers
+  warning_levels:
+    - watch
+    - warning
+    - danger
+    - severe
+
+# API Settings
+api:
+  host: "localhost"
+  port: 8000
+  debug: true
+  cors_origins:
+    - "http://localhost:3000"
+    - "http://localhost:8000"
+
+# Database Settings
+database:
+  url: "sqlite:///simulation.db"
+  pool_size: 5
+  max_overflow: 10
+
+# Logging Settings
+logging:
+  level: "INFO"
+  file: "simulation.log"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s" 
