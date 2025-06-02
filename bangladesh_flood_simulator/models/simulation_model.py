@@ -141,7 +141,7 @@ class FloodSimulationModel(Model):
         if not households:
             return 0
         # Count households not at home as evacuated
-        evacuated = [h for h in households if h.state.get('evacuation_status') != 'home']
+        evacuated = [h for h in households if h.get_state().get('evacuation_status') != 'home']
         return len(evacuated) / len(households)
     
     def _get_shelter_occupancy(self):

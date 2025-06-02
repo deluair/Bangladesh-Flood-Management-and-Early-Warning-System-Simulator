@@ -156,7 +156,7 @@ class RiverAgent(BaseAgent):
             # Filter cells based on elevation and distance
             affected_areas = []
             for cell in affected_cells:
-                if self._is_area_affected(cell):
+                if self._is_area_affected(cell.position):
                     affected_areas.append(cell)
             
             self.update_state({'affected_areas': affected_areas})

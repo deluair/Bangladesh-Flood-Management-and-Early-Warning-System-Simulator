@@ -242,6 +242,16 @@ class DataCollector:
 
     def save_data(self) -> None:
         """Save collected data to files."""
+        def convert_np(obj):
+            if isinstance(obj, dict):
+                return {k: convert_np(v) for k, v in obj.items()}
+            elif isinstance(obj, list):
+                return [convert_np(i) for i in obj]
+            elif isinstance(obj, np.generic):
+                return obj.item()
+            elif hasattr(obj, 'unique_id'):
+                return getattr(obj, 'unique_id')
+            return obj
         # Save detailed data
         for data_type, data_list in self.data.items():
             filename = os.path.join(
@@ -249,7 +259,7 @@ class DataCollector:
                 f"{data_type}_{self.timestamp}.json"
             )
             with open(filename, 'w') as f:
-                json.dump(data_list, f, indent=2)
+                json.dump(convert_np(data_list), f, indent=2)
         
         # Save metrics
         metrics_filename = os.path.join(
@@ -257,7 +267,7 @@ class DataCollector:
             f"metrics_{self.timestamp}.json"
         )
         with open(metrics_filename, 'w') as f:
-            json.dump(self.metrics, f, indent=2)
+            json.dump(convert_np(self.metrics), f, indent=2)
         
         # Save summary report
         self._save_summary_report()
