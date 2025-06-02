@@ -243,6 +243,16 @@ class ShelterAgent(BaseAgent):
         Returns:
             Dictionary containing shelter status information
         """
+        # Determine resource status based on current resource levels
+        resource_status = 'adequate'
+        for resource, amount in self.state['resources'].items():
+            if amount < 50:  # Critical threshold
+                resource_status = 'critical'
+                break
+            elif amount < 100:  # Low threshold
+                resource_status = 'low'
+                break
+
         return {
             'shelter_id': self.unique_id,
             'occupancy': self.state['occupancy'],
@@ -252,5 +262,6 @@ class ShelterAgent(BaseAgent):
             'maintenance_level': self.state['maintenance_level'],
             'resources': self.state['resources'],
             'power_status': self.state['power_status'],
-            'water_supply': self.state['water_supply']
+            'water_supply': self.state['water_supply'],
+            'resource_status': resource_status
         } 

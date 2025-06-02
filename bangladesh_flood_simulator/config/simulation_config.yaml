@@ -106,8 +106,51 @@ database:
   pool_size: 5
   max_overflow: 10
 
-# Logging Settings
+# Logging configuration
 logging:
-  level: "INFO"
-  file: "simulation.log"
-  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s" 
+  level: INFO
+  format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+  file: 'simulation.log'
+
+# Grid configuration
+grid:
+  width: 50
+  height: 50
+
+# River configuration
+rivers:
+  count: 3
+  flood_probability: 0.1
+  max_flood_level: 10.0
+  recovery_rate: 0.05
+
+# Household configuration
+households:
+  count: 100
+  evacuation_threshold: 5.0
+  return_threshold: 2.0
+  vulnerability_mean: 0.5
+  vulnerability_std: 0.2
+
+# Shelter configuration
+shelters:
+  count: 10
+  capacity: 100
+  resource_decay: 0.01
+  maintenance_cost: 1000
+
+# Economic configuration
+economics:
+  count: 30
+  sectors:
+    - agriculture
+    - industry
+    - services
+  vulnerability:
+    agriculture: 0.8
+    industry: 0.6
+    services: 0.4
+  recovery_time:
+    agriculture: 30
+    industry: 20
+    services: 15 

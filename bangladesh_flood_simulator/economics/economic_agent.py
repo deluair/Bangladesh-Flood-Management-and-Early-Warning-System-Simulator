@@ -203,7 +203,8 @@ class EconomicAgent(BaseAgent):
             'income': self.state['income'],
             'market_access': self.state['market_access'],
             'flood_impact': self.state.get('flood_impact', 0),
-            'insured_damage': self.state.get('insured_damage', 0)
+            'insured_damage': self.state.get('insured_damage', 0),
+            'recovery_status': 'recovering' if self.state['recovery_rate'] < 1 else 'recovered'
         }
 
     def apply_policy_intervention(self, intervention: Dict[str, Any]) -> None:

@@ -145,7 +145,7 @@ class DataCollector:
                     'household_id': agent.unique_id,
                     'position': agent.position,
                     'evacuation_status': agent.state.get('evacuation_status'),
-                    'shelter_id': agent.state.get('assigned_shelter')
+                    'shelter_id': agent.state.get('nearest_shelter')
                 })
         
         return evacuation_data

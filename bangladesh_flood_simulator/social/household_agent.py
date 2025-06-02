@@ -45,9 +45,12 @@ class HouseholdAgent(BaseAgent):
         self.size = attributes.get('size', 1)
         self.vulnerability = attributes.get('vulnerability', 0.5)
         self.income_level = np.random.choice(['low', 'medium', 'high'], p=[0.6, 0.3, 0.1])
+        # Normalize probabilities for housing_type
+        housing_probs = np.array([0.845, 0.068, 0.078])
+        housing_probs = housing_probs / housing_probs.sum()
         self.housing_type = np.random.choice(
             ['kutcha', 'semi_pucca', 'pucca'],
-            p=[0.845, 0.068, 0.078]
+            p=housing_probs
         )
         
         # Initialize assets
@@ -94,8 +97,9 @@ class HouseholdAgent(BaseAgent):
     def _check_warnings(self) -> None:
         """Check for flood warnings from nearby rivers."""
         # Get nearby river agents
+        grid_position = (int(round(self.position[0])), int(round(self.position[1])))
         nearby_rivers = self.model.grid.get_neighbors(
-            self.position,
+            grid_position,
             moore=True,
             include_center=False,
             radius=3
@@ -115,9 +119,9 @@ class HouseholdAgent(BaseAgent):
 
     def _assess_flood_risk(self) -> None:
         """Assess the household's exposure to flood risk."""
-        # Get nearby river agents
+        grid_position = (int(round(self.position[0])), int(round(self.position[1])))
         nearby_rivers = self.model.grid.get_neighbors(
-            self.position,
+            grid_position,
             moore=True,
             include_center=False,
             radius=3

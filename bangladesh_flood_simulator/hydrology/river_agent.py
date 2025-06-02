@@ -197,5 +197,7 @@ class RiverAgent(BaseAgent):
             'water_level': self.state['water_level'],
             'flood_status': self.state['flood_status'],
             'warning_level': self.state['warning_level'],
-            'affected_areas': len(self.state['affected_areas'])
+            'affected_areas': len(self.state['affected_areas']),
+            'flow_rate': self.state['flow_rate'],
+            'flood_probability': 0.0,
         } 
